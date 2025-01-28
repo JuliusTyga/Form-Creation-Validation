@@ -12,7 +12,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
 
-        // Initialize validation status and messages
+        // Call the validateForm function and get the result
+        const { isValid, messages } = validateForm(username, email, password);
+
+        // Display feedback
+        feedbackDiv.style.display = "block";
+        if (isValid) {
+            feedbackDiv.textContent = "Registration successful!";
+            feedbackDiv.style.color = "#28a745"; // Success color
+        } else {
+            feedbackDiv.innerHTML = messages.join("<br>"); // Error messages
+            feedbackDiv.style.color = "#dc3545"; // Error color
+        }
+    });
+
+    /**
+     * Validates the form inputs.
+     * @param {string} username - The username input.
+     * @param {string} email - The email input.
+     * @param {string} password - The password input.
+     * @returns {object} Validation result and messages.
+     */
+    function validateForm(username, email, password) {
         let isValid = true;
         const messages = [];
 
@@ -34,14 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
             messages.push("Password must be at least 8 characters long.");
         }
 
-        // Display feedback
-        feedbackDiv.style.display = "block";
-        if (isValid) {
-            feedbackDiv.textContent = "Registration successful!";
-            feedbackDiv.style.color = "#28a745"; // Success color
-        } else {
-            feedbackDiv.innerHTML = messages.join("<br>"); // Error messages
-            feedbackDiv.style.color = "#dc3545"; // Error color
-        }
-    });
+        return { isValid, messages };
+    }
 });
